@@ -3,6 +3,9 @@ import { restaurantList } from '@/apollo/server';
 import { gql, useQuery } from '@apollo/client';
 import React from 'react'
 import { useLocationContext } from '@/context/LocationContext';
+import Sections from '@/components/resturants/sections/sections';
+import AllRestaurants from '@/components/resturants/allResturants/allRestaurants';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 function page() {
   const { location } = useLocationContext(); 
@@ -30,9 +33,19 @@ function page() {
       .map((id:any) => restaurants.filter((res:any) => res._id === id))
       .flat(),
   }));
-  console.log("RESTAURANTS",restaurantSections)
+  console.log("RESTAURANTS",restaurants)
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-20 w-full mt-[30px] mb-[30px]">
+        <ProgressSpinner />
+      </div>
+    );
+  }
   return (
-    <div>resturents</div>
+    <div>
+      <Sections sections={restaurantSections}></Sections>
+      <AllRestaurants allRestaurants={restaurants}></AllRestaurants>
+    </div>
   )
 }
 

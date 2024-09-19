@@ -7,7 +7,8 @@ import client from "@/apollo";
 import Header from "../header/header";
 import { LocationProvider } from "@/context/LocationContext";
 import Footer from "../footer/footer";
-import GoogleMapsLoader from "../maps/googleMapsLoader";
+import GoogleMapsLoader from "../maps/mapLoader/googleMapsLoader";
+import GoogleMapsProvider from "../maps/googleMapsProvider";
 
 export default function ClientLayout({
   children,
@@ -18,12 +19,12 @@ export default function ClientLayout({
   return (
     <ApolloProvider client={client}>
       <ConfigurationProvider>
-        <Header/>
+      <Header/>
         <LocationProvider>
-        <GoogleMapsLoader googleMapsKey={process.env.NEXT_PUBLIC_MAP_KEY}>
+        <GoogleMapsProvider>
             {children}
-          </GoogleMapsLoader>
-        
+          </GoogleMapsProvider>
+      <Footer/>
         </LocationProvider>
       </ConfigurationProvider>
     </ApolloProvider>

@@ -1,27 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { GoogleMap, useJsApiLoader, Libraries } from '@react-google-maps/api';
 import { useConfiguration } from '@/context/ConfigurationContext';
-import { ProgressSpinner } from 'primereact/progressspinner';
 import { Toast } from 'primereact/toast';
-import mapStyles from './mapStyle/MapStyles';
-import SearchLocation from '../SearchDropDown/dropdown';
+import mapStyles from '../mapStyle/MapStyles';
+import SearchLocation from '../../SearchDropDown/dropdown';
 import { useLocationContext } from '@/context/LocationContext';
 
 interface GoogleMapsLoaderProps {
-  children: React.ReactNode;
-  libraries?: Libraries;
   googleMapsKey?: string;
 }
 
-const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ children, libraries, googleMapsKey }) => {
+const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ googleMapsKey }) => {
   const { location, setLocation } = useLocationContext(); // Access and set location via context
-
   const mapRef = useRef<google.maps.Map | null>(null);
   const { configuration } = useConfiguration();
   const MapsKey = googleMapsKey || configuration?.googleApiKey;
   const toast = useRef<any>(null);
 
-  const [shouldLoadMap, setShouldLoadMap] = useState(false);
   const defaultLibraries: Libraries = ['places', 'drawing', 'geometry', 'visualization'];
 
   // Request geolocation and set the location in context
@@ -67,16 +62,10 @@ const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ children, libraries
     requestUserLocation();
   }, []);
 
-  useEffect(() => {
-    if (MapsKey) {
-      setShouldLoadMap(true);
-    }
-  }, [MapsKey]);
-
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: MapsKey ?? '',
-    libraries: libraries || defaultLibraries,
+    libraries: defaultLibraries,
   });
 
   const onLoad = (map: google.maps.Map) => {
@@ -87,12 +76,9 @@ const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ children, libraries
     mapRef.current = null;
   };
 
-  if (!shouldLoadMap || !isLoaded || !location) {
-    return (
-      <div className="flex items-center justify-center h-screen w-full">
-        <ProgressSpinner />
-      </div>
-    );
+  // If map isn't loaded yet, render nothing (no loader)
+  if (!isLoaded || !location) {
+    return null; // Simply render nothing if the map isn't ready
   }
 
   const handleFindResturent = () => {
@@ -122,8 +108,6 @@ const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ children, libraries
           <SearchLocation handleFindResturent={handleFindResturent} />
         </div>
       </GoogleMap>
-
-      {children}
     </>
   );
 };

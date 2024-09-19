@@ -11,6 +11,7 @@
   "dependencies": {
     "@apollo/client": "^3.11.8",
     "@react-google-maps/api": "^2.19.3",
+    "fast-average-color": "^9.4.0",
     "firebase": "^9.23.0",
     "graphql": "^16.9.0",
     "next": "14.2.11",
