@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import FastAverageColor from 'fast-average-color'; // Import the default instance
+import React, { useState } from 'react';
 
 interface Props {
   restaurant?: any;
-  width?:string
 }
 
-const RestaurantCard: React.FC<Props> = ({ restaurant ,width}) => {
+const RestaurantCard: React.FC<Props> = ({ restaurant }) => {
   const [bgColor, setBgColor] = useState('#f0f0f0');
 
-
   return (
-    <div className={`rounded-lg shadow-lg overflow-hidden w-[${width||"200px"}] lg:mt-[0px] mt-[20px]`} style={{ backgroundColor: bgColor }} >
+    <div className={`rounded-lg shadow-lg overflow-hidden w-[200px] lg:mt-[0px] mt-[20px] cursor-pointer`} style={{ backgroundColor: bgColor }}>
       <div className="relative">
-        <img src={restaurant.image} alt={restaurant.name} className="w-full h-32 object-cover" />
+        <div className="p-[5px] group">
+          <img
+            src={restaurant.image}
+            alt={restaurant.name}
+            className="w-full h-32 object-cover rounded-[10px] transform transition-transform duration-300 group-hover:scale-110"
+          />
+        </div>
         <div className="absolute top-2 left-2 bg-white text-black text-xs font-bold rounded-full px-2 py-1">
           {restaurant.deliveryTime} MIN
         </div>
@@ -35,7 +38,7 @@ const RestaurantCard: React.FC<Props> = ({ restaurant ,width}) => {
       <div className="p-4 text-center">
         <h3 className="text-lg font-bold text-black truncate">{restaurant.name}</h3>
         <div className="text-sm text-gray-600">
-        ⭐ {restaurant.reviewData.ratings}/5 ({restaurant.reviewData.total})
+          ⭐ {restaurant.reviewData.ratings}/5 ({restaurant.reviewData.total})
         </div>
         <div className="text-sm text-gray-500 truncate">
           {restaurant.categories

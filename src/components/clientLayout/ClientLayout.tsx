@@ -19,13 +19,13 @@ export default function ClientLayout({
   return (
     <ApolloProvider client={client}>
       <ConfigurationProvider>
-      <Header/>
-        <LocationProvider>
-        <GoogleMapsProvider>
-            {children}
-          </GoogleMapsProvider>
-      <Footer/>
-        </LocationProvider>
+        <Header/>
+          <LocationProvider>
+              <GoogleMapsProvider>
+                  {children}
+              </GoogleMapsProvider>
+          </LocationProvider>
+        <Footer/>
       </ConfigurationProvider>
     </ApolloProvider>
   );

@@ -6,14 +6,9 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'tailwindcss/tailwind.css';
 import { useLocationContext } from '@/context/LocationContext'; 
+import Link from 'next/link';
 
-interface Props{
-    handleFindResturent?:()=>void;
-}
-
-const SearchLocation: React.FC<Props> = ({
-    handleFindResturent,
-}) => {
+const SearchLocation = () => {
     const [address, setAddress] = useState<string>('');
     const [coordinates, setCoordinates] = useState<{ lat: number; lng: number } | null>(null);
     const { setLocation } = useLocationContext();
@@ -64,9 +59,9 @@ const SearchLocation: React.FC<Props> = ({
                     console.error("Geolocation error:", error);
                 },
                 {
-                    timeout: 10000, // 10 seconds to get the location before timing out
-                    maximumAge: 0,  // Do not use a cached position
-                    enableHighAccuracy: true, // Use high accuracy for location if available
+                    timeout: 10000, 
+                    maximumAge: 0, 
+                    enableHighAccuracy: true, 
                 }
             );
         } else {
@@ -79,14 +74,8 @@ const SearchLocation: React.FC<Props> = ({
         getCurrentLocation();
     }, []);
 
-    const handleSearch = () => {
-        if (coordinates) {
-            console.log("Searching for restaurants at:", coordinates);
-        }
-    };
-
     return (
-        <div className="absolute lg:top-[400px] top-[55%] left-0 right-0 w-full z-50 flex justify-center items-center p-4">
+        <div className="absolute lg:top-[400px] top-[55%] left-0 right-0 w-full z-40 flex justify-center items-center p-4">
             <div className="flex lg:bg-black bg-[#787777] rounded-[10px] lg:h-[80px] w-full max-w-4xl p-1">
                 <div className="lg:flex items-center w-full">
                     <div className="lg:w-4/5 w-full px-2 lg:mt-0 mt-5">
@@ -127,11 +116,12 @@ const SearchLocation: React.FC<Props> = ({
                     </div>
 
                     <div className="lg:w-1/5 w-full px-2 lg:mt-0 mt-5 lg:mb-0 mb-5">
-                        <Button
-                            label="Find Restaurants"
-                            className="p-button-success h-[60px] w-full text-lg  rounded-[30px] shadow-lg bg-[#90ea93]"
-                            onClick={handleFindResturent}
-                        />
+                        <Link href="/restaurants">
+                            <Button
+                                label="Find Restaurants"
+                                className="p-button-success h-[60px] w-full text-lg  rounded-[30px] shadow-lg bg-[#90ea93]"
+                            />
+                        </Link>
                     </div>
                 </div>
             </div>

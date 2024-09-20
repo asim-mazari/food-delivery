@@ -11,7 +11,7 @@ interface GoogleMapsLoaderProps {
 }
 
 const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ googleMapsKey }) => {
-  const { location, setLocation } = useLocationContext(); // Access and set location via context
+  const { location, setLocation } = useLocationContext();
   const mapRef = useRef<google.maps.Map | null>(null);
   const { configuration } = useConfiguration();
   const MapsKey = googleMapsKey || configuration?.googleApiKey;
@@ -19,7 +19,7 @@ const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ googleMapsKey }) =>
 
   const defaultLibraries: Libraries = ['places', 'drawing', 'geometry', 'visualization'];
 
-  // Request geolocation and set the location in context
+ 
   const requestUserLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -28,7 +28,7 @@ const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ googleMapsKey }) =>
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           };
-          setLocation(userLocation); // Update the location in the context
+          setLocation(userLocation);
         },
         (error) => {
           switch (error.code) {
@@ -47,9 +47,9 @@ const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ googleMapsKey }) =>
           }
         },
         {
-          timeout: 10000, // Timeout after 10 seconds
-          maximumAge: 0,  // Prevent using a cached position
-          enableHighAccuracy: true, // Use high accuracy if available
+          timeout: 10000,
+          maximumAge: 0,
+          enableHighAccuracy: true,
         }
       );
     } else {
@@ -58,7 +58,6 @@ const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ googleMapsKey }) =>
   };
 
   useEffect(() => {
-    // Trigger the location permission request when the component mounts
     requestUserLocation();
   }, []);
 
@@ -76,14 +75,9 @@ const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ googleMapsKey }) =>
     mapRef.current = null;
   };
 
-  // If map isn't loaded yet, render nothing (no loader)
   if (!isLoaded || !location) {
-    return null; // Simply render nothing if the map isn't ready
+    return null;
   }
-
-  const handleFindResturent = () => {
-    alert('Find restaurant clicked');
-  };
 
   return (
     <>
@@ -105,7 +99,7 @@ const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ googleMapsKey }) =>
         }}
       >
         <div>
-          <SearchLocation handleFindResturent={handleFindResturent} />
+          <SearchLocation />
         </div>
       </GoogleMap>
     </>

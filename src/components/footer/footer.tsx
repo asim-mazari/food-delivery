@@ -1,7 +1,6 @@
 "use client";
 
 import React from 'react';
-import { Button } from 'primereact/button'; // Assuming you might need this in future
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -10,7 +9,6 @@ const Footer = () => {
   return (
     <footer className="text-black lg:pl-[130px]">
       <div className="bg-[#86efac] h-auto lg:rounded-l-[80px] lg:flex justify-between p-8">
-        {/* Left Section with brand information */}
         <div className="bg-black h-full lg:w-[300px] w-full rounded-[80px] p-[30px] text-center mb-8 lg:mb-0">
           <h2 className="text-3xl font-bold text-green-400">Enatega</h2>
           <p className="mt-4 text-center text-[#fff]">
@@ -29,7 +27,6 @@ const Footer = () => {
         <li><a href="#" className="hover:underline">Terms and Conditions</a></li>
       </ul>
 
-      {/* Divider */}
       <hr className="w-full border-t-2 border-gray-400 mt-8" />
 
       <p className="text-black text-center mt-4">
@@ -44,7 +41,6 @@ const Footer = () => {
           <div className="lg:w-[300px] w-full flex flex-col items-center">
               <h3 className="text-xl font-bold mb-4">Follow Us</h3>
               <div className="flex space-x-4 mb-4">
-                {/* Social Icons (you can replace these with icons from a library) */}
                 <a href="#" className="text-black hover:text-gray-800">
                   <i className="pi pi-facebook text-3xl"></i>
                 </a>

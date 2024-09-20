@@ -10,15 +10,17 @@ const AllRestaurantCard: React.FC<Props> = ({ restaurant, width }) => {
 
   return (
     <div
-      className={`rounded-lg shadow-lg overflow-hidden w-[${width || '300px'}] lg:mt-[0px] mt-[20px] bg-white`}
+      className={`rounded-lg shadow-lg overflow-hidden w-[${width || '300px'}] lg:mt-[0px] mt-[20px] bg-white cursor-pointer`}
       style={{ backgroundColor: bgColor }}
     >
       <div className="relative">
+      <div className='p-[5px] group'>
         <img
-          src={restaurant.image}
-          alt={restaurant.name}
-          className="w-full h-40 object-cover"
-        />
+            src={restaurant.image}
+            alt={restaurant.name}
+            className="w-full h-40 object-cover rounded-[10px] transform transition-transform duration-300 group-hover:scale-110"
+          />
+      </div>
         <div className="absolute top-2 left-2 bg-white text-black text-xs font-bold rounded-full px-2 py-1">
           {restaurant.deliveryTime} MIN
         </div>
